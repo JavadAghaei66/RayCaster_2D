@@ -5,11 +5,16 @@ RayCaster::RayCaster()
     is_running = true;
 
     black_screen = (struct SDL_Rect){0, 0, WINDOW_WIDTH, WINDOW_HEIGHT};
-
-    blocker.x = 300;
-    blocker.y = 300;
-    blocker.w = 80;
-    blocker.h = 80;
+    // first blocker
+    blockers[0].x = 300;
+    blockers[0].y = 300;
+    blockers[0].w = 80;
+    blockers[0].h = 80;
+    // second blocker
+    blockers[1].x = 600;
+    blockers[1].y = 600;
+    blockers[1].w = 80;
+    blockers[1].h = 80;
 
     light_source_X = 20;
     light_source_Y = 20;
@@ -75,7 +80,7 @@ void RayCaster::RenderRays()
             x += dx * step;
             y += dy * step;
 
-            if (CheckCollision(&blocker, x, y))
+            if (CheckCollision(&blockers[0], x, y) || CheckCollision(&blockers[1], x, y))
                 break;
 
             SDL_RenderDrawPoint(renderer, (int)x, (int)y);
@@ -87,7 +92,11 @@ void RayCaster::RenderRays()
 void RayCaster::RenderBlocker()
 {
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255); // white
-    SDL_RenderFillRect(renderer, &blocker);
+    for (auto &blocker : blockers)
+    {
+        SDL_Rect rect_blocker = (struct SDL_Rect){blocker.x, blocker.y, blocker.w, blocker.h};
+        SDL_RenderFillRect(renderer, &rect_blocker);
+    }
 }
 
 // renders black background
@@ -99,24 +108,27 @@ void RayCaster::RenderBg()
 
 void RayCaster::MoveBlocker()
 {
-    if (direction) // goes up
+    for (auto &blocker : blockers)
     {
-        if (blocker.y <= 0)
-            direction = false; // change direction
-        else
-            blocker.y -= speed;
-    }
-    else // goes down
-    {
-        if ((blocker.y + blocker.h) >= WINDOW_HEIGHT)
-            direction = true;
-        else
-            blocker.y += speed;
+        if (blocker.direction) // goes up
+        {
+            if (blocker.y <= 0)
+                blocker.direction = false; // change direction
+            else
+                blocker.y -= speed;
+        }
+        else // goes down
+        {
+            if ((blocker.y + blocker.h) >= WINDOW_HEIGHT)
+                blocker.direction = true;
+            else
+                blocker.y += speed;
+        }
     }
 }
 
 // checks if (x,y) position is inside blocker or not
-bool RayCaster::CheckCollision(SDL_Rect *blocker, float x, float y)
+bool RayCaster::CheckCollision(Blocker *blocker, float x, float y)
 {
     float bX = blocker->x;
     float bY = blocker->y;
