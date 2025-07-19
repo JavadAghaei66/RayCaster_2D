@@ -16,7 +16,7 @@ struct Blocker
 {
     int x, y;
     int w, h;
-    bool direction = false;
+    bool direction = false; // false == down
 };
 
 class RayCaster
@@ -30,10 +30,9 @@ private:
     // Rays
     int maxLength = 1000;
     float step = 1.0f;
-    // Blocker
-    Blocker blockers[2];   // 2 blockers
-    bool direction = true; // true means UP false means DOWN
-    int speed = 4;
+    // Blockers
+    Blocker blockers[BLOCKER_COUNT]; // 2 blockers
+    int speed = 4;                   // Moving speed
     // Light source
     int light_source_X;
     int light_source_Y;
@@ -41,7 +40,7 @@ private:
 public:
     RayCaster();
     bool InitRayCaster();
-    bool CheckCollision(Blocker *blocker, float x, float y);
+    bool CheckCollision(Blocker &blocker, float x, float y);
     bool IsRunning() const;
     void MoveBlocker();
     void Delay();

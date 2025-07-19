@@ -53,7 +53,7 @@ bool RayCaster::InitRayCaster()
 
 void RayCaster::Render()
 {
-    RenderBg();
+    RenderBg(); // clears background
     RenderRays();
     RenderBlocker();
     SDL_RenderPresent(renderer);
@@ -74,12 +74,13 @@ void RayCaster::RenderRays()
         float x = light_source_X;
         float y = light_source_Y;
 
+        // move the ray forward until it hits a blocker or reaeches maxlength
         for (int j = 0; j < maxLength; j++)
         {
             x += dx * step;
             y += dy * step;
 
-            if (CheckCollision(&blockers[0], x, y) || CheckCollision(&blockers[1], x, y))
+            if (CheckCollision(blockers[0], x, y) || CheckCollision(blockers[1], x, y))
                 break;
 
             SDL_RenderDrawPoint(renderer, (int)x, (int)y);
@@ -109,30 +110,30 @@ void RayCaster::MoveBlocker()
 {
     for (auto &blocker : blockers)
     {
-        if (blocker.direction) // goes up
+        if (blocker.direction) // blocker is going up
         {
             if (blocker.y <= 0)
-                blocker.direction = false; // change direction
-            else
-                blocker.y -= speed;
+                blocker.direction = false; // change direction to down
+
+            blocker.y -= speed;
         }
-        else // goes down
+        else // blocker is going down
         {
             if ((blocker.y + blocker.h) >= WINDOW_HEIGHT)
-                blocker.direction = true;
-            else
-                blocker.y += speed;
+                blocker.direction = true; // change direction to up
+
+            blocker.y += speed;
         }
     }
 }
 
 // checks if (x,y) position is inside blocker or not
-bool RayCaster::CheckCollision(Blocker *blocker, float x, float y)
+bool RayCaster::CheckCollision(Blocker &blocker, float x, float y)
 {
-    float bX = blocker->x;
-    float bY = blocker->y;
-    float bW = blocker->w;
-    float bH = blocker->h;
+    float bX = blocker.x;
+    float bY = blocker.y;
+    float bW = blocker.w;
+    float bH = blocker.h;
 
     return (x >= bX && x <= (bX + bW) && y >= bY && y <= (bY + bH));
 }
