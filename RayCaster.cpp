@@ -4,7 +4,11 @@ RayCaster::RayCaster()
 {
     is_running = true;
     black_screen = (struct SDL_Rect){0, 0, WINDOW_WIDTH, WINDOW_HEIGHT};
-    // blockers deafult position
+    // rays deafult values
+    maxLength = 1000;
+    step = 1.0f;
+    // blockers deafult values
+    speed = 4;
     blockers[0].x = 200;
     blockers[0].y = 0;
     blockers[0].w = 80;

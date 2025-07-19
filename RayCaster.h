@@ -1,3 +1,6 @@
+#ifndef RAYCASTER_H
+#define RAYCASTER_H
+
 #include <iostream>
 #include <SDL2/SDL.h>
 #include <math.h>
@@ -28,11 +31,11 @@ private:
     SDL_Renderer *renderer;
     SDL_Rect black_screen;
     // Rays
-    int maxLength = 1000;
-    float step = 1.0f;
+    int maxLength;
+    float step;
     // Blockers
     Blocker blockers[BLOCKER_COUNT]; // 2 blockers
-    int speed = 4;                   // Moving speed
+    int speed;                       // Moving speed
     // Light source
     int light_source_X;
     int light_source_Y;
@@ -52,3 +55,5 @@ public:
     void RenderRays();
     void RenderBlocker();
 };
+
+#endif 
