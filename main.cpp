@@ -14,9 +14,7 @@ int main()
     while (rc.IsRunning())
     {
         rc.Input();
-        rc.RenderBg();
-        rc.RenderRays();
-        rc.RenderBlocker();
+        rc.Render();
         rc.MoveBlocker();
         rc.Delay();
     }

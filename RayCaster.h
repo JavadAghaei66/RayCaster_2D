@@ -11,20 +11,15 @@ using namespace std;
 
 #define RAY_COUNT 360
 
-struct Ray
-{
-    float x, y;
-};
-
 class RayCaster
 {
 private:
     bool is_running;
     const double PI = 3.141592653589793238463;
     SDL_Window *window;
-    SDL_Surface *surface;
+    SDL_Renderer *renderer;
+    SDL_Rect black_screen;
     // Rays
-    struct Ray rays[RAY_COUNT];
     int maxLength = 1000;
     float step = 1.0f;
     // Blocker
@@ -34,11 +29,7 @@ private:
     // Light source
     int light_source_X;
     int light_source_Y;
-    // Renderer
-    SDL_Renderer *blockerRenderer;
-    SDL_Renderer *rayRenderer;
-    SDL_Renderer *bgRenderer; // black background renderer
-
+    
 public:
     RayCaster();
     bool InitRayCaster();
@@ -49,6 +40,7 @@ public:
     void Input();
     void Quit();
     // Render
+    void Render();
     void RenderBg();
     void RenderRays();
     void RenderBlocker();
