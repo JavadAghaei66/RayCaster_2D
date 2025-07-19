@@ -3,21 +3,20 @@
 RayCaster::RayCaster()
 {
     is_running = true;
-
     black_screen = (struct SDL_Rect){0, 0, WINDOW_WIDTH, WINDOW_HEIGHT};
-    // first blocker
-    blockers[0].x = 300;
-    blockers[0].y = 300;
+    // blockers deafult position
+    blockers[0].x = 200;
+    blockers[0].y = 0;
     blockers[0].w = 80;
     blockers[0].h = 80;
-    // second blocker
-    blockers[1].x = 600;
+
+    blockers[1].x = 520;
     blockers[1].y = 600;
     blockers[1].w = 80;
     blockers[1].h = 80;
 
-    light_source_X = 20;
-    light_source_Y = 20;
+    light_source_X = 40;
+    light_source_Y = 40;
 }
 
 bool RayCaster::InitRayCaster()
