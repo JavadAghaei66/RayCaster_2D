@@ -3,7 +3,7 @@
 RayCaster::RayCaster()
 {
     is_running = true;
-    black_screen = (struct SDL_Rect){0, 0, WINDOW_WIDTH, WINDOW_HEIGHT};
+    black_screen = {0, 0, WINDOW_WIDTH, WINDOW_HEIGHT};
     // rays deafult values
     maxLength = 1000;
     step = 1.0f;
@@ -98,7 +98,7 @@ void RayCaster::RenderBlocker()
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255); // white
     for (auto &blocker : blockers)
     {
-        SDL_Rect rect_blocker = (struct SDL_Rect){blocker.x, blocker.y, blocker.w, blocker.h};
+        SDL_Rect rect_blocker = {blocker.x, blocker.y, blocker.w, blocker.h};
         SDL_RenderFillRect(renderer, &rect_blocker);
     }
 }
