@@ -22,3 +22,10 @@ int main()
     rc.Quit();
     return 0;
 }
+
+#if defined(_WIN32) && defined(_MSC_VER)
+#include <windows.h>
+
+int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) { return main(); }
+
+#endif
