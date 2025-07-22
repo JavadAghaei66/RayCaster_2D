@@ -3,7 +3,7 @@
 RayCaster::RayCaster()
 {
     is_running = true;
-    SDL_Rect black_screen = {0, 0, WINDOW_WIDTH, WINDOW_HEIGHT};
+    black_screen = {0, 0, WINDOW_WIDTH, WINDOW_HEIGHT};
     // rays deafult values
     maxLength = 1000;
     step = 1.0f;
